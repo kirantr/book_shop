@@ -22,10 +22,24 @@ if (isset($_POST['table']))
         $objMyPDO = $objMySQL;
         $keyData = "`name`";
         $key = "`name`";
-        $data = "`data`";
-        $table = NAME_TABLE;
+        $data = $_POST['text1'];
+        $table = 'AUTHORS';
 //        var_dump($table);
     }
+
+
+    if ($_POST['table'] == 'new_book')
+    {
+        $objMySQL = new MySQL();
+        $objMySQL->pdo = $objMyPDO->pdo;
+        $objMyPDO = $objMySQL;
+        $keyData = "`name`, `title`,`price`,`descript`";
+        $key = "`name`";
+        $data = $_POST['text1'];
+        $table = 'BOOKS';
+//        var_dump($table);
+    }
+
 
 //SELECT
     if ($act == 'select')
@@ -43,7 +57,7 @@ if (isset($_POST['table']))
         if ($act == 'insert')
         {
             $objMyPDO->flag = 'insert';
-            $objMyPDO->insert($table, $keyData)->values($_POST['text'])->exec();
+            $objMyPDO->insert($table, $keyData)->values($data)->exec();
             $report = SAVE_OK;
         }
 
@@ -51,15 +65,16 @@ if (isset($_POST['table']))
         if ($act == 'delete')
         {
             $objMyPDO->flag = 'delete';
-            $objMyPDO->delete()->from($table)->where('user7', $key)->exec();
+            $del=$objMyPDO->delete()->from($table)->where($key, $data)->exec();
             $report = DELETE_OK;
+            var_dump($del);
         }
 //UPDATE
         if ($act == 'update')
         {
             $objMyPDO->flag = 'update';
-            $objMyPDO->update($table)->set($data, $_POST['text'])
-                    ->where('user7', $key)->exec();
+            $objMyPDO->update($table)->set($data, $_POST['text1'])
+                    ->where($key, $data)->exec();
             $report = UPDATE_OK;
         }
     }

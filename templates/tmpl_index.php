@@ -14,10 +14,13 @@
         <div class="container center-block">
             <form method="post"  action="index.php">
                 <div class="col-md-offset-4 col-md-7">
-                    <p><input type="text" name="text" value="Input Data"> </p>
+                    <p><input type="text" name="text1" value="Input Data"> </p>
+                    <p><input type="text" name="text2" value="Input Data"> </p>
+                    <p><input type="text" name="text3" value="Input Data"> </p>
                 </div>
                 <div class="col-md-offset-4 col-md-8">
-                    <p><input type="radio" name="table" value="new_author" checked> New Author</p>
+                    <p><input type="radio" name="table" value="new_author" checked>New Author
+                    <span class="col-md-offset-1">  <input type="radio" name="table" value="new_book">New Book</p></span>
                 </div>
                 <div class="col-md-offset-3 col-md-9">
                     <br><p><input type="radio" name="flag" value="select" checked> Select</p>
