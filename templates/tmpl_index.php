@@ -28,7 +28,9 @@
                 </div>
                 <div class="col-md-offset-4 col-md-8">
                     <p><input type="radio" name="table" value="new_author" checked>New Author
-                        <span class="col-md-offset-1">  <input type="radio" name="table" value="new_book">New Book</p></span>
+                        <span class="col-md-offset-1"><input type="radio" name="table" value="new_book">New Book</span>
+                        <span class="col-md-offset-1"><input type="radio" name="table" value="new_user">New User</span>
+                    </p>
                 </div>
                 <div class="col-md-offset-3 col-md-9">
                     <br><p><input type="radio" name="flag" value="select" checked> Select</p>
@@ -57,7 +59,15 @@
                                     . ', <br> discount: ' . $value['discount'] . '%<br><br>'
                                 ;
                     }
-                    echo
+                     if ($_POST['table'] == 'new_user')
+                    {
+                        $index = 'name: ' . $value['name']
+                                    . ', <br> login: ' . $value['login'] . ' $'
+                                    . ', <br> password: ' . $value['pass']
+                                    . ', <br> discount: ' . $value['discount'] . '%<br><br>'
+                                ;
+                    }
+                   echo
                     '<div class="col-md-offset-4 col-md-4 output">'
                     . $index
                     . "</div>";

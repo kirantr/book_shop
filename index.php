@@ -18,9 +18,9 @@ if (isset($_POST['table']))
 
     $objMySQL = new MySQL();
 
+//AUTHORS    
     if ($_POST['table'] == 'new_author')
     {
-//        $objMySQL->pdo = $objMySQL->pdo;
         $keyData = "`name`";
         $key = "`name`";
         $delData = $text1;
@@ -30,9 +30,9 @@ if (isset($_POST['table']))
     }
 
 
+//BOOKS    
     if ($_POST['table'] == 'new_book')
     {
-        $objMySQL->pdo = $objMySQL->pdo;
         $keyData = "`title`,`price`,`descript`, `discount`";
         $key = "`title`";
         $delData = $text1;
@@ -41,6 +41,15 @@ if (isset($_POST['table']))
 //        var_dump($table);
     }
 
+//CUSTOMERS
+    if ($_POST['table'] == 'new_user')
+    {
+        $keyData = "`name`,`login`,`pass`, `discount`";
+        $key = "`name`";
+        $delData = $text1;
+        $data = $text1 . "', '" . $text2 . "', '" . $text3 . "', '" . $text4;
+        $table = 'CUSTOMERS';
+    }
 
 //SELECT
     if ($act == 'select')
