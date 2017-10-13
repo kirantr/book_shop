@@ -26,10 +26,14 @@
                     <p><input type="text" name="text3" value="Input Data3">
                         <input type="text" name="text4" value="Input Data4"></p>
                 </div>
-                <div class="col-md-offset-4 col-md-8">
+                <div class="col-md-offset-3 col-md-9">
                     <p><input type="radio" name="table" value="new_author" checked>New Author
-                        <span class="col-md-offset-1"><input type="radio" name="table" value="new_book">New Book</span>
+                        <span class="col-md-offset-1"><input type="radio" name="table" value="new_genre">Genre</span>
+                        <span class="col-md-offset-1"><input type="radio" name="table" value="insert_book">Insert Book</span>
                         <span class="col-md-offset-1"><input type="radio" name="table" value="new_user">New User</span>
+                    </p>
+                    <p>
+                        <span class="col-md-offset-1"><input type="radio" name="table" value="new_book">New Book</span>
                     </p>
                 </div>
                 <div class="col-md-offset-3 col-md-9">
@@ -51,23 +55,34 @@
                     {
                         $index = $value['name'];
                     }
+                    
+                    if ($_POST['table'] == 'new_genre')
+                    {
+                        $index = $value['name'];
+                    }
                     if ($_POST['table'] == 'new_book')
                     {
-                        $index = 'title: ' . $value['title']
-                                    . ', <br> price: ' . $value['price'] . ' $'
-                                    . ', <br> descript: ' . $value['descript']
-                                    . ', <br> discount: ' . $value['discount'] . '%<br><br>'
-                                ;
+                        $index = $value['name'];
                     }
-                     if ($_POST['table'] == 'new_user')
+                    
+                    if ($_POST['table'] == 'insert_book')
+                    {
+                        $index = 'title: ' . $value['title']
+                                . ', <br> price: ' . $value['price'] . ' $'
+                                . ', <br> descript: ' . $value['descript']
+                                . ', <br> discount: ' . $value['discount'] . '%<br><br>'
+                        ;
+                    }
+                    
+                    if ($_POST['table'] == 'new_user')
                     {
                         $index = 'name: ' . $value['name']
-                                    . ', <br> login: ' . $value['login'] . ' $'
-                                    . ', <br> password: ' . $value['pass']
-                                    . ', <br> discount: ' . $value['discount'] . '%<br><br>'
-                                ;
+                                . ', <br> login: ' . $value['login'] . ''
+                                . ', <br> password: ' . $value['pass']
+                                . ', <br> discount: ' . $value['discount'] . '%<br><br>'
+                        ;
                     }
-                   echo
+                    echo
                     '<div class="col-md-offset-4 col-md-4 output">'
                     . $index
                     . "</div>";

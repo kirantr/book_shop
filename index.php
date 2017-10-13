@@ -29,9 +29,20 @@ if (isset($_POST['table']))
 //        var_dump($table);
     }
 
+//GENRE
+    if ($_POST['table'] == 'new_genre')
+    {
+        $keyData = "`name`";
+        $key = "`name`";
+        $delData = $text1;
+        $data = $text1;
+        $table = 'GENRE';
+//        var_dump($table);
+    }
+
 
 //BOOKS    
-    if ($_POST['table'] == 'new_book')
+    if ($_POST['table'] == 'insert_book')
     {
         $keyData = "`title`,`price`,`descript`, `discount`";
         $key = "`title`";
@@ -50,6 +61,8 @@ if (isset($_POST['table']))
         $data = $text1 . "', '" . $text2 . "', '" . $text3 . "', '" . $text4;
         $table = 'CUSTOMERS';
     }
+    
+//-----------------------------------------------------------------------------------------------------------------------------------------------
 
 //SELECT
     if ($act == 'select')
@@ -64,13 +77,23 @@ if (isset($_POST['table']))
     {
         $objMySQL->flag($_POST['flag']);
 
+//NEW BOOK
+        if ($_POST['table'] == 'new_book')
+        {
+        $objMySQL->flag = 'select';
+        $selectMySQL = $objMySQL->select("`name`")->
+                        from('AUTHORS')->exec();
+        $selectMySQL = $objMySQL->select("`name`")->
+                        from('GENRE')->exec();
+        }
 //INSERT
-        if ($act == 'insert')
+        elseif ($act == 'insert')
         {
             $objMySQL->flag = 'insert';
             $objMySQL->insert($table, $keyData)->values($data)->exec();
             $report = SAVE_OK;
             var_dump($objMySQL);
+            
         }
 
 //DELETE
