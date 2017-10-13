@@ -62,7 +62,7 @@ if (isset($_POST['table']))
         $table = 'CUSTOMERS';
     }
     
-//-----------------------------------------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 
 //SELECT
     if ($act == 'select')
@@ -81,10 +81,9 @@ if (isset($_POST['table']))
         if ($_POST['table'] == 'new_book')
         {
         $objMySQL->flag = 'select';
-        $selectMySQL = $objMySQL->select("`name`")->
-                        from('AUTHORS')->exec();
-        $selectMySQL = $objMySQL->select("`name`")->
-                        from('GENRE')->exec();
+        $selectMySQL = $objMySQL->select("a.`name`, g.`name`")->
+                        from('AUTHORS as a, GENRE as g')->exec();
+        var_dump($selectMySQL);
         }
 //INSERT
         elseif ($act == 'insert')
