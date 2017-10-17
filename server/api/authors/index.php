@@ -1,6 +1,7 @@
 <?php
 
 include '../../app/lib/RestServer.php';
+include '../../app/models/ModelAuthors.php';
 
 class Authors extends RestServer
 {
