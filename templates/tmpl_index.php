@@ -62,7 +62,7 @@
                     }
                     if ($_POST['table'] == 'new_book')
                     {
-                        $index = $value['name'] . $value['name'];
+                        $index = $value['name'];
                     }
                     
                     if ($_POST['table'] == 'insert_book')
