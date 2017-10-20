@@ -1,22 +1,27 @@
 <?php
+
+include 'ModelDB.php';
+
 class ModelAuthors extends ModelDB
 {
-    public function getAuthors($param=false)
+
+    public function getAuthors($param = false)
     {
-        $sql = 'SELECT id, name FROM authors';
+        $sel1 = 'SELECT id, name FROM authors';
         if ($param !== false)
         {
             if (is_array($param))
             {
-                $sql .= " WHERE ";
-                foreach ($param as $key => $val)
+                $sel2 = " WHERE ";
+                foreach ($param as $key => $value)
                 {
-                    $sql .= $key.'='.$this->pdo->quote($val).' AND ';
+                    $sel3 = $key . '=' . "'" . $value . "'" . ' AND ';
                 }
-                $sql = substr($sql, 0, -5);
             }
         }
-        $data = $this->selectQuery($sql);
+        $sel = $sel . $sel1 . $sel2 . $sel3;
+        $data = $this->selectDB($sel);
         return $data;
     }
+
 }

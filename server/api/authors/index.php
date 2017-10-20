@@ -1,6 +1,7 @@
 <?php
 
 include '../../app/lib/RestServer.php';
+include '../../app/lib/Response.php';
 include '../../app/models/ModelAuthors.php';
 
 class Authors extends RestServer
@@ -18,7 +19,7 @@ class Authors extends RestServer
 
     public function getAuthors($param = false)
     {
-        $path = "../../app/lib/ModelAuthors.php";
+        $path = "../../app/models/ModelAuthors.php";
         if (file_exists($path))
         {
             if ($param !== false)
@@ -31,7 +32,10 @@ class Authors extends RestServer
             $result = $this->encodedData($result);
             return $this->response->serverSuccess(200, $result);
         }
-        die("File not found!");
+        else
+        {
+            die("File not found!");
+        }
     }
 
 }

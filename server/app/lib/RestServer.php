@@ -56,15 +56,49 @@ class RestServer
 
     protected function getData()
     {
-        if (($this->reqMethod == 'GET'))
+        if (($this->reqMethod == 'GET') || ($this->reqMethod == 'DELETE'))
         {
-            $data = explode('/api/', $this->url);
-            $data['id'] = $data;
-            foreach ($data as $key => $val)
+            $clearUrl = explode('/api/', $this->url);
+            $clearUrl = explode('/', $clearUrl[count($clearUrl) - 1], 2);
+            $data = $clearUrl[count($clearUrl) - 1];
+            preg_match('#(\.[a-z]+)#', $data, $matches);
+            if (!empty($matches[0]))
             {
-            $this->data = array_combine($key, $val);
+                $this->encode = $matches[0];
+                $data = trim($data, $this->encode);
             }
-        return $this->data;
+            $data = explode('/', $data);
+//            var_dump($data);
+            if (count($data) % 2)
+            {
+                $id = (int) $data[count($data) - 1];
+                $data = [];
+                $data['id'] = $id;
+                if ($data['id'] == 0)
+                {
+                    $data = false;
+                }
+            }
+            else
+            {
+                $arrKeys = [];
+                $arrValues = [];
+                foreach ($data as $key => $value)
+                {
+                    if ($key % 2)
+                    {
+                        $arrValues[] = urldecode($value);
+                    }
+                    else
+                    {
+                        $arrKeys[] = $value;
+                    }
+                }
+                $data = array_combine($arrKeys, $arrValues);
+            }
+            $this->data = $data;
+//            var_dump($data);
+            return $this->data;
         }
         elseif ($this->reqMethod == 'POST')
         {
@@ -73,7 +107,7 @@ class RestServer
         }
         elseif ($this->reqMethod == 'PUT')
         {
-            $this->data = json_decode(file_get_contents("php://input"), true);
+            $this->data = json_decode(file_get_contents("php://input"));
             return $this->data;
         }
     }
