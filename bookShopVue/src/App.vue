@@ -1,33 +1,13 @@
 <template>
   <div id="app">
+    <!-- <img src="./assets/logo.png"> -->
     <router-view/>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'app',
-  data(){
-    return {
-      url: {
-        home:'http://localhost/sash/book_shop_vue/server/api/',
-        class: 'http://192.168.0.15/~user7/book_shop_vue/client/api/'
-      },
-      location: 'home'
-    }
-  },
-  computed: {
-    getUrl: function(){
-      var self = this
-      if(self.location == 'home'){
-        return self.url.home
-      }
-      else
-      {
-        return self.url.class
-      }
-    }
-  }
+  name: 'app'
 }
 </script>
 
