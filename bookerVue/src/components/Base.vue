@@ -1,12 +1,12 @@
 <template>
     <div class="base">
-        <h2>The book shop</h2>
-        <p class="author"><span>Authors: </span></p>
-        <p v-for="author in authors" class="author">{{author.name}}/ </p>
+        <h2>The booker</h2>
+        <p class="author"><span>Data: </span></p>
+        <p v-for="month in months" class="month">{{month}}/ </p>
         </p>
         <div>
-            <ul v-for="author in authors">
-                <li ><a href="#">{{author.name}}</a></li>
+            <ul v-for="month in months">
+                <li ><a href="#">{{month}}</a></li>
             </ul>
         </div>
     </div>
@@ -18,13 +18,13 @@
             name: 'Base',
                     data () {
             return {
-            authors: [],
+            months: [],
                     name: '',
                             id: ''
                 }
             },
                     methods: {
-                    getAuthors: function () {
+                    getMonth: function () {
                     var self = this
 //      axios.get(getUrl() + 'authors/')
                             axios.get('http://localhost/book_shop/bookShopRest/server/api/authors/')
