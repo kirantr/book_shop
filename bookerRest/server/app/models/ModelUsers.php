@@ -2,12 +2,12 @@
 
 include 'ModelDB.php';
 
-class ModelAuthors extends ModelDB
+class ModelUsers extends ModelDB
 {
 
-    public function getAuthors($param = false)
+    public function getUsers($param = false)
     {
-        $sel1 = 'SELECT id, name FROM authors';
+        $sel1 = 'SELECT id, Name F, Email, Role FROM Users';
         if ($param !== false)
         {
             if (is_array($param))

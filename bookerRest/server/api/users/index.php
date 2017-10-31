@@ -2,9 +2,9 @@
 
 include '../../app/lib/RestServer.php';
 include '../../app/lib/Response.php';
-include '../../app/models/ModelAuthors.php';
+include '../../app/models/ModelUsers.php';
 
-class Authors extends RestServer
+class Users extends RestServer
 {
 
     private $model;
@@ -12,23 +12,23 @@ class Authors extends RestServer
 
     public function __construct()
     {
-        $this->model = new ModelAuthors();
+        $this->model = new ModelUsers();
         $this->response = new Response();
         $this->run();
     }
 
     public function getAuthors($param = false)
     {
-        $path = "../../app/models/ModelAuthors.php";
+        $path = "../../app/models/ModelUsers.php";
         if (file_exists($path))
         {
             if ($param !== false)
             {
-                $result = $this->model->getAuthors($param);
+                $result = $this->model->getUsers($param);
                 $result = $this->encodedData($result);
                 return $this->response->serverSuccess(200, $result);
             }
-            $result = $this->model->getAuthors();
+            $result = $this->model->getUsers();
             $result = $this->encodedData($result);
             return $this->response->serverSuccess(200, $result);
         }
@@ -40,4 +40,4 @@ class Authors extends RestServer
 
 }
 
-$books = new Authors();
+$books = new Users();
