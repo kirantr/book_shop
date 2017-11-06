@@ -8,7 +8,7 @@
                     {{getMonth[currentMonth]}} {{currentYear}}
                     <button v-on:click="nextMonth()">&gt;</button>
                 </div>
-                <table>
+                <table class="table table-active">
                     <tr>
                         <th v-for="weekday in getDays">{{weekday}}</th>
                     </tr>

@@ -1,16 +1,16 @@
 <template>
     <div class="base">
-        <div v-if="authUser == ''">
+        <!-- <div v-if="authUser == ''">
             <login></login>
-        </div>
+        </div> -->
         <div>
             <div>
                 <div>
                     Hello, {{user.login}}!
                 </div>
-
+                  <div class="calendar">
                 <calendar></calendar>
-
+                  </div>
             </div>
                     <p>
                         <button v-on:click="logout()">Logout</button>
@@ -98,3 +98,8 @@
          }
 </script>
 
+<<style>
+.calendar{
+      background: #bce8f1;
+}
+</style>

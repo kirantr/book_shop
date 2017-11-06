@@ -1,15 +1,14 @@
 <?php
-
 include '../../app/lib/RestServer.php';
 include '../../app/lib/Response.php';
 include '../../app/models/ModelUsers.php';
 
 class Users extends RestServer
 {
-
     private $model;
     private $response;
 
+    
     public function __construct()
     {
         $this->model = new ModelUsers();
@@ -17,27 +16,66 @@ class Users extends RestServer
         $this->run();
     }
 
-    public function getAuthors($param = false)
+    public function getUsers($param)
     {
-        $path = "../../app/models/ModelUsers.php";
-        if (file_exists($path))
+        try
         {
-            if ($param !== false)
-            {
                 $result = $this->model->getUsers($param);
                 $result = $this->encodedData($result);
                 return $this->response->serverSuccess(200, $result);
-            }
-            $result = $this->model->getUsers();
-            $result = $this->encodedData($result);
-            return $this->response->serverSuccess(200, $result);
         }
-        else
+        catch (Exception $exception)
         {
-            die("File not found!");
+            return $this->response->serverError(500, $exception->getMessage());
         }
     }
 
-}
+    public function postUsers($param)
+    {
+        try
+        {
+            $result = $this->model->addUser($param);
+            return $this->response->serverSuccess(200, $result);
 
-$books = new Users();
+        }
+        catch (Exception $exception)
+        {
+            return $this->response->serverError(500, $exception->getMessage());
+        }
+    }
+
+    public function putUsers($param)
+    {
+        try
+        {
+            if (isset($param['id_user']))
+            {
+                $result = $this->model->editUser($param);
+                $result = $this->encodedData($result);
+                return $this->response->serverSuccess(200, $result);
+            }
+            $result = $this->model->loginUser($param);
+            $result = $this->encodedData($result);
+            return $this->response->serverSuccess(200, $result);
+        }
+        catch (Exception $exception)
+        {
+            return $this->response->serverError(500, $exception->getMessage());
+        }
+    }
+
+    public function deleteUsers($param)
+    {
+        try
+        {
+            $result = $this->model->deleteUser($param);
+            return $this->response->serverSuccess(200, $result);
+
+        }
+        catch (Exception $exception)
+        {
+            return $this->response->serverError(500, $exception->getMessage());
+        }
+    }
+}
+$users = new Users();

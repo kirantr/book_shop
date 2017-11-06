@@ -1,6 +1,6 @@
 <template>
-    <div class="login">
-    <div>
+  <div class="login">
+    <div class="loginForm">
       <p>{{errMessage}}</p>
         <div>
             <h1>Log in</h1>
@@ -79,11 +79,15 @@ export default {
 <style scoped>
 .login{
   background-image: url(/static/img/login_img.jpg);
+  background-position: center top;
   background-repeat: no-repeat;
   height:1024px;
 }
 
 h1{
     color: white;
+}
+.loginForm{
+  padding-top: 10%;
 }
 </style>
