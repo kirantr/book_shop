@@ -1,47 +1,100 @@
 <template>
     <div class="base">
-        <h2>The booker</h2>
-        <p class="author"><span>Data: </span></p>
-        <p v-for="month in months" class="month">{{month}}/ </p>
-        </p>
+        <div v-if="authUser == ''">
+            <login></login>
+        </div>
         <div>
-            <ul v-for="month in months">
-                <li ><a href="#">{{month}}</a></li>
-            </ul>
+            <div>
+                <div>
+                    Hello, {{user.login}}!
+                </div>
+
+                <calendar></calendar>
+
+            </div>
+                    <p>
+                        <button v-on:click="logout()">Logout</button>
+                    </p>
         </div>
     </div>
 </template>
 
 <script>
-    import axios from 'axios'
-            export default {
-            name: 'Base',
-                    data () {
-            return {
-            months: [],
-                    name: '',
-                            id: ''
+             import axios from 'axios'
+             import Login from './Login'
+             import Calendar from './Calendar'
+             export default {
+             name: 'Main',
+                   data () {
+             return {
+                     authUser: '',
+                      role: '',
+                      user: {},
                 }
-            },
-                    methods: {
-                    getMonth: function () {
-                    var self = this
-//      axios.get(getUrl() + 'authors/')
-                            axios.get('http://localhost/book_shop/bookShopRest/server/api/authors/')
-                            .then(function (response) {
-                            console.log(response.data)
-                                    if (Array.isArray(response.data))
+             },
+                   methods: {
+                         authUserFun: function()
+                         {
+                         var self = this
+                               if (localStorage['user'])
+                         {
+                         self.user = JSON.parse(localStorage['user'])
+                               axios.get(getUrl() + 'users/' + self.user.id)
+                               .then(function (response) {
+                               console.log(response.data)
+                                     if (Array.isArray(response.data)){
+                               if (self.user === response.data[0])
+                                    {
+                                          self.user.login = response.data[0].login
+                                          self.user.role = response.data[0].role
+                                          self.authUser = 1;
+                                          return true
+                                    }
+                                    else
+                                    {
+                                          delete localStorage['user']
+                                          self.authUser = ''
+                                          return false
+                                    }
+                               }
+                               else {
+                                        delete localStorage['user']
+                                        self.errorMsg = response.data
+                                        return false
+                                    }
+                               })
+                               .catch(function (error) {
+                               console.log(error)
+                               });
+                         }
+                         else
                             {
-                            self.authors = response.data
+                                  self.authUser = ''
+                                  return false
                             }
-                            else {
-                            self.errorMsg = response.data
-                            }
-                            })
-                            .catch(function (error) {
-                            console.log(error)
-                            })
-                    }
-                    }
-            }
+                        }
+                 },
+                   logout: function(){
+                        var self = this
+                              if (localStorage['user'])
+                        {
+                                  delete localStorage['user']
+                                  self.user = {},
+                                  self.authUser = ''
+                                  return true
+                        }
+                        else
+                        {
+                                 return false
+                        }
+                   },
+                   created(){
+                        this.authUserFun()
+                    },
+                   components: {
+                         'Login': Login,
+                         'Calendar': Calendar
+                   }
+         }
 </script>
+
