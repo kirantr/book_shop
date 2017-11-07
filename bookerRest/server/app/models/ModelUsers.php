@@ -6,20 +6,19 @@ class ModelUsers extends ModelDB
 {
     public function getUsers($param)
     {
-        var_dump($param);
-        if ($param == 'admin')
+        // var_dump($param);
+        // if ($param == 'admin')
+        if ($param == '')
         {
             unset($param['id_user']);
             $sql = 'SELECT'
-                .' u.id,'
-                .' r.name as role,'
-                .' u.id_role,'
-                .' u.login,'
-                .' u.email,'
-                .' u.username'
-                .' FROM kz_users u'
-                .' LEFT JOIN kz_roles r'
-                .' ON u.id_role=r.id';
+                .' id,'
+                .' Name,'
+                .' Email,'
+                .' Role,'
+                .' Pass'
+                .' FROM kz_users'
+                ;
             if (!empty($param))
             {
                 if (is_array($param))
@@ -33,11 +32,11 @@ class ModelUsers extends ModelDB
                 }
                 $sql .= ' ORDER BY u.id';
             }
-            else
-            {
-                $sql .= ' ORDER BY u.id';
-            }
-            $data = $this->selectQuery($sql);
+            // else
+            // {
+            //     $sql .= ' ORDER BY u.id';
+            // }
+            $data = $this->selectDB($sql);
             return $data;
         }
         else if ($param == 'user')
@@ -74,7 +73,7 @@ class ModelUsers extends ModelDB
         }
         else
         {
-            return ERR_getUsers;
+            return ERR;
         }
     }
 
