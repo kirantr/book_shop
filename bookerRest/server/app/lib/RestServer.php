@@ -59,6 +59,7 @@ class RestServer
         if (($this->reqMethod == 'GET') || ($this->reqMethod == 'DELETE'))
         {
             $clearUrl = explode('/api/', $this->url);
+//            var_dump($clearUrl);
             $clearUrl = explode('/', $clearUrl[count($clearUrl) - 1], 2);
             $data = $clearUrl[count($clearUrl) - 1];
             preg_match('#(\.[a-z]+)#', $data, $matches);
@@ -71,6 +72,7 @@ class RestServer
 //            var_dump($data);
             if (count($data) % 2)
             {
+            var_dump(count($data) % 2);
                 $id = (int) $data[count($data) - 1];
                 $data = [];
                 $data['id'] = $id;
@@ -97,7 +99,7 @@ class RestServer
                 $data = array_combine($arrKeys, $arrValues);
             }
             $this->data = $data;
-//            var_dump($data);
+//            var_dump( $this->data);
             return $this->data;
         }
         elseif ($this->reqMethod == 'POST')
@@ -107,7 +109,9 @@ class RestServer
         }
         elseif ($this->reqMethod == 'PUT')
         {
-            $this->data = json_decode(file_get_contents("php://input"));
+//            var_dump(file_get_contents("php://input"), true);
+            $this->data = json_decode(file_get_contents("php://input"), true);
+//            var_dump('$this->data= ', $this->data);
             return $this->data;
         }
     }
@@ -123,6 +127,19 @@ class RestServer
             case '.txt':
                 header("Content-type: text/javascript");
                 return print_r($data, true);
+                break;
+            case '.xhtml':
+                header('Content-Type: text/html; charset=utf-8');
+                $str = '<head></head><body><pre>';
+                $str .= print_r($data, true);
+                $str .= '</pre></body>';
+                return $str;
+                break;
+            case '.xml':
+                header("Content-type: text/xml");
+                $xml = new SimpleXMLElement('<?xml version="1.0"?><data></data>');
+                $this->toXml($data, $xml);
+                return $xml->asXML();
                 break;
         }
     }

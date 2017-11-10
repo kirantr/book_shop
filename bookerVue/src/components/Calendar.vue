@@ -1,5 +1,14 @@
 <template>
     <div>
+          <p class="rooms">
+            <button v-for="(room,index) in rooms" v-on:click="selRoomFun(index)" 
+            :class="{selBtn: room.id == selRoom.id}">
+              {{room.name}}
+            </button>
+          </p>
+          <p>
+            Boardroom is: <strong>{{selRoom.name}}</strong>
+          </p>
 
         <div>
             <div>
@@ -31,24 +40,58 @@
 </template>
 
 <script>
+import axios from 'axios'
     export default {
         name: 'calendar',
-        props: ['role'],
+        props: ['user'],
         data () {
     return {
 //    msg: '',
-//            errorMsg: '',
+            errorMsg: '',
             date: new Date(),
             weeks: [],
             currentMonth: '',
             currentYear: '',
             weekDays: 'sun',
 //            nameMonth: 'en',
-            rooms: ''
+      rooms: [],
+      selRoom: {
+        id: '1',
+        name: ''
+      },
         }
     },
             methods:{
-            getMonthYear: function()
+selRoomFun: function(index){
+      var self = this
+      self.selRoom = self.rooms[index]
+//      self.getEventsMonth()
+    },
+    getRooms: function(){
+      var self = this
+      axios.get(getUrl() + 'rooms/' + self.user + '/id_user/' + self.user.id)
+          .then(function (response) {
+          if (Array.isArray(response.data))
+          {
+            self.rooms = response.data
+            if (!localStorage['room'])
+            {
+              self.selRoom = self.rooms[0]
+            }
+            else
+            {
+              self.selRoom = JSON.parse(localStorage['room'])
+            }
+          }
+          else{
+            self.errorMsg = response.data
+          }
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+    },
+                getMonthYear: function()
             {
                     var self = this
                     self.currentMonth = self.date.getMonth()
@@ -167,7 +210,21 @@
             },
             created(){
                 this.getMonthYear()
+    this.getRooms()
                 this.rowsCalendar()
         }
  }
 </script>
+
+<style>
+    .table{
+        width: 50%;
+    }
+    
+    td{
+        width: 50px;
+        height: 70px;
+    }
+    
+    
+</style>

@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <div class="loginForm">
-      <p>{{errMessage}}</p>
+        <div class="error">{{errMessage}}</div>
         <div>
             <h1>Log in</h1>
         </div>
@@ -19,7 +19,7 @@
         </div>
         <div>
           <div>
-              <p><button v-on:click="getLogin()">Submit</button></p>
+              <br><p><button v-on:click="getLogin()">Submit</button></p>
           </div>
         </div>
     </div>
@@ -49,7 +49,7 @@ export default {
             pass: self.pass
           }, axConf)
           .then(function (response) {
-            if (response.data.id && response.data)
+            if (response.data.id && response.data.role)
                 {
                     self.$parent.user.id = response.data.id
                     self.$parent.user = response.data 
@@ -60,7 +60,7 @@ export default {
                     self.$parent.authUser=1
                 }
             else {
-                     self.errMessage = response.data
+                     self.errMessage = 'These login and password are not found!'
                 }
           })
           .catch(function (error) {
@@ -69,7 +69,7 @@ export default {
         }
         else
         {
-          self.errMessage = 'Enter data in all fields!'
+          self.errMessage = 'Fill in all the fields!'
         }
     }
   }
@@ -89,5 +89,10 @@ h1{
 }
 .loginForm{
   padding-top: 10%;
+}
+
+.error{
+        font-size: 24px;
+        color: red;
 }
 </style>

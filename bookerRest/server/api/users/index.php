@@ -46,6 +46,7 @@ class Users extends RestServer
 
     public function putUsers($param)
     {
+//        print_r($param);
         try
         {
             if (isset($param['id_user']))

@@ -1,15 +1,15 @@
 <template>
     <div class="base">
-        <!-- <div v-if="authUser == ''">
+        <div v-if="authUser == ''">
             <login></login>
-        </div> -->
-        <div>
+        </div>
+        <div  v-else>
             <div>
                 <div>
-                    Hello, {{user.login}}!
+                    Hello, {{user.login}}
                 </div>
                   <div class="calendar">
-                <calendar></calendar>
+                <calendar>:role="user.role" :user="user"</calendar>
                   </div>
             </div>
                     <p>

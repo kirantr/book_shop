@@ -7,8 +7,8 @@ class ModelUsers extends ModelDB
     public function getUsers($param)
     {
         // var_dump($param);
-        // if ($param == 'admin')
-        if ($param == '')
+         if ($param == 'admin' || $param == 'user')
+//        if ($param == '')
         {
             unset($param['id_user']);
             $sql = 'SELECT'
@@ -62,25 +62,25 @@ class ModelUsers extends ModelDB
                         $sql .= 'u.'.$key.'='.$this->pdo->quote($value).' AND ';
                     }
                     $sql = substr($sql, 0, -5);
-                    $data = $this->selectQuery($sql);
+                    $data = $this->selectDB($sql);
                     return $data;
                 }
             }
             else
             {
-                return ERR;
+                return ERR1;
             }
         }
         else
         {
-            return ERR;
+            return ERR2;
         }
     }
 
 
     public function addUser($param)
     {
-        if ($this->checkData($param) == 'admin')
+        if ($param == 'admin')
         {
             $validate = $this->validator->isValidateRegistration($param);
             if ($validate === true)
@@ -95,17 +95,18 @@ class ModelUsers extends ModelDB
                 $result = $this->execQuery($sql);
                 if ($result === false)
                 {
-                    return ERR;
+                    return ERR3;
                 }
                 return $result;
             }
             return $validate;
         }
-        return ERR_ACCESS;
+        return ERR9;
     }
 
     public function loginUser($param)
     {
+//         var_dump($param);
         if (!empty($param['login']) && !empty($param['pass']))
         {
             $pass = $param['pass'];
@@ -113,46 +114,48 @@ class ModelUsers extends ModelDB
             $id = '';
             $role = '';
             $sql = 'SELECT u.id,'
-                .' r.name as role,'
-                .' u.username,'
+                .' u.name,'
+                .' r.role as role,'
                 .' u.pass'
                 .' FROM kz_users u'
                 .' LEFT JOIN kz_roles r'
-                .' ON u.id_role=r.id'
-                .' WHERE login='.$login;
-            $data = $this->selectQuery($sql);
+                .' ON u.role_id=r.id'
+                .' WHERE name='.$login;
+//            SELECT u.id, r.role as role, u.name, u.pass FROM kz_users u LEFT JOIN kz_roles r ON u.role_id=r.id WHERE name = 'admin'
+            $data = $this->selectDB($sql);
+//            var_dump($data);
             if (is_array($data))
             {
                 foreach ($data as $value)
                 {
                     if ($pass !== $value['pass'])
                     {
-                        return ERR;
+                        return ERR4;
                     }
                     else
                     {
                         $id = $this->pdo->quote($value['id']);
-                        $userName = $value['username'];
+                        $userName = $value['name'];
                         $role = $value['role'];
                     }
                 }
             }
             else
             {
-                return ERR;
+                return ERR5;
             }
-            $arrRes = ['id'=>$id, 'login'=>$login, 'username'=>$userName, 'role'=>$role];
+            $arrRes = ['id'=>$id, 'login'=>$login, 'name'=>$userName, 'role'=>$role];
             return $arrRes;
         }
         else
         {
-            return ERR;
+            return ERR6;
         }
     }
 
     public function deleteUser($param)
     {
-        if ($this->checkData($param) == 'admin')
+        if ($param == 'admin')
         {
             if ($this->getRole($param['id']) == 'user')
             {
@@ -166,7 +169,7 @@ class ModelUsers extends ModelDB
             else
             {
                 $sql = 'SELECT count(id_role) as sum FROM users WHERE id_role=2';
-                $data = $this->selectQuery($sql);
+                $data = $this->selectDB($sql);
                 if ($data[0]['sum'] > 1)
                 {
                     $id = $this->pdo->quote($param['id']);
@@ -174,18 +177,18 @@ class ModelUsers extends ModelDB
                     $result = $this->execQuery($sql);
                     return $result;
                 }
-                return ERR;
+                return ERR7;
             }
 
         }
-        return ERR;
+        return ERR8;
     }
 
     private function getRole($id)
     {
         $id = $this->pdo->quote($id);
         $sql = 'SELECT r.name as role FROM kz_users u LEFT JOIN kz_roles r ON u.id_role=r.id WHERE u.id='.$id;
-        $data = $this->selectQuery($sql);
+        $data = $this->selectDB($sql);
         if (is_array($data))
         {
             return $data[0]['role'];
