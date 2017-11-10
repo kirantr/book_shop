@@ -46,14 +46,12 @@ import axios from 'axios'
         props: ['user'],
         data () {
     return {
-//    msg: '',
             errorMsg: '',
             date: new Date(),
             weeks: [],
             currentMonth: '',
             currentYear: '',
             weekDays: 'sun',
-//            nameMonth: 'en',
       rooms: [],
       selRoom: {
         id: '1',
@@ -65,11 +63,11 @@ import axios from 'axios'
 selRoomFun: function(index){
       var self = this
       self.selRoom = self.rooms[index]
-//      self.getEventsMonth()
     },
     getRooms: function(){
       var self = this
-      axios.get(getUrl() + 'rooms/' + self.user + '/id_user/' + self.user.id)
+
+axios.get(getUrl() + 'rooms/' + self.user + '/id_user/1')
           .then(function (response) {
           if (Array.isArray(response.data))
           {

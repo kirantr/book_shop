@@ -33,7 +33,7 @@
                 }
              },
                    methods: {
-                         authUserFun: function()
+                         authUserCreate: function()
                          {
                          var self = this
                                if (localStorage['user'])
@@ -89,7 +89,7 @@
                         }
                    },
                    created(){
-                        this.authUserFun()
+                        this.authUserCreate()
                     },
                    components: {
                          'Login': Login,

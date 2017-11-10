@@ -72,7 +72,7 @@ class RestServer
 //            var_dump($data);
             if (count($data) % 2)
             {
-            var_dump(count($data) % 2);
+            // var_dump(count($data) % 2);
                 $id = (int) $data[count($data) - 1];
                 $data = [];
                 $data['id'] = $id;

@@ -17,6 +17,7 @@ class Rooms extends RestServer
 
     public function getRooms($param)
     {
+        
         try
         {
             $result = $this->model->getRooms($param);
