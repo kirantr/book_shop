@@ -5,16 +5,18 @@
         </div>
         <div  v-else>
             <div>
-                <div>
-                    Hello, {{user.login}}
+                <div class="hello ">
+                    <p>Hello, {{user.login}}</p>
                 </div>
                   <div class="calendar">
-                <calendar>:role="user.role" :user="user"</calendar>
+                        <calendar>:role="user.role" :user="user"</calendar>
                   </div>
             </div>
+            <div class="logout col-md-offset-3 col-md-6">
                     <p>
                         <button v-on:click="logout()">Logout</button>
                     </p>
+            </div>
         </div>
     </div>
 </template>
@@ -101,5 +103,13 @@
 <style>
 .calendar{
       background: #bce8f1;
+}
+
+.hello{
+      color: green;
+      font-size: 24px;
+}
+.logout{
+      padding: 30px;
 }
 </style>

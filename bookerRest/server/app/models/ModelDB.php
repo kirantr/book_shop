@@ -18,12 +18,6 @@ class ModelDB
 
     protected function selectDB($sql)
     {
-//        $sql = $this->pdo->prepare($sql);
-//        $result = $sql->execute();
-//        if (false == $result)
-//        {
-//            throw new Exception(ERR_QUERY);
-//        }
         $result = $this->pdo->query($sql, PDO::FETCH_ASSOC);
         if (!is_bool($result))
         {

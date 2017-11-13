@@ -15,7 +15,7 @@ class ModelRooms extends ModelDB
         }
         else
         {
-            return ERR_ACCESS;
+            return ERR_GET_ROOMS;
         }
     }
 }

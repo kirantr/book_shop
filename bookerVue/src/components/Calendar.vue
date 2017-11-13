@@ -7,27 +7,29 @@
             </button>
           </p>
           <p>
-            Boardroom is: <strong>{{selRoom.name}}</strong>
+            Boardroom is: <b>{{selRoom.name}}</b>
           </p>
 
         <div>
             <div>
                 <div>
-                    <button v-on:click="prevMonth()">&lt;</button>
+                    <p><button v-on:click="prevMonth()">&lt;</button>
                     {{getMonth[currentMonth]}} {{currentYear}}
-                    <button v-on:click="nextMonth()">&gt;</button>
+                    <button v-on:click="nextMonth()">&gt;</button></p>
                 </div>
-                <table class="table table-active">
-                    <tr>
-                        <th v-for="weekday in getDays">{{weekday}}</th>
-                    </tr>
-                    <tr v-for="week in weeks">
-                        <td v-for="day in week" :class="{date: day.findDay == currentDay}">
-                            {{day.findDay}}</td>  
-                    </tr>
-                </table>
+                <div class="table table-active col-md-offset-6 col-md-6">
+                    <table>
+                        <tr>
+                            <th v-for="weekday in getDays">{{weekday}}</th>
+                        </tr>
+                        <tr v-for="week in weeks">
+                            <td v-for="day in week" :class="{date: day.findDay == currentDay}">
+                                {{day.findDay}}</td>  
+                        </tr>
+                    </table>
             </div>
-            <div>
+            </div>
+            <div class="col-md-offset-3 col-md-6">
                 <div>
                     <button v-if="weekDays == 'sun'" v-on:click="ruWeek()">RU Week</button>
                     <button v-else-if="weekDays == 'mon'" v-on:click="enWeek()">EN Week</button>
@@ -205,12 +207,14 @@ axios.get(getUrl() + 'rooms/Boardroom 1/id_user/2')
 
 <style>
     .table{
-        width: 50%;
+        width: 70%;
+        padding-left: 300px;
     }
     
     td{
-        width: 50px;
-        height: 70px;
+        width: 90px;
+        height: 90px;
+        text-align: center;
     }
     
     
