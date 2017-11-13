@@ -69,35 +69,7 @@ class RestServer
                 $data = trim($data, $this->encode);
             }
             $data = explode('/', $data);
-//            var_dump($data);
-            if (count($data) % 2)
-            {
-            // var_dump(count($data) % 2);
-                $id = (int) $data[count($data) - 1];
-                $data = [];
-                $data['id'] = $id;
-                if ($data['id'] == 0)
-                {
-                    $data = false;
-                }
-            }
-            else
-            {
-                $arrKeys = [];
-                $arrValues = [];
-                foreach ($data as $key => $value)
-                {
-                    if ($key % 2)
-                    {
-                        $arrValues[] = urldecode($value);
-                    }
-                    else
-                    {
-                        $arrKeys[] = $value;
-                    }
-                }
-                $data = array_combine($arrKeys, $arrValues);
-            }
+
             $this->data = $data;
 //            var_dump( $this->data);
             return $this->data;

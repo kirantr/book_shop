@@ -1,7 +1,7 @@
 <template>
     <div>
           <p class="rooms">
-            <button v-for="(room,index) in rooms" v-on:click="selRoomFun(index)" 
+            <button v-for="(room,index) in rooms" v-on:click="selectRoom(index)" 
             :class="{selBtn: room.id == selRoom.id}">
               {{room.name}}
             </button>
@@ -35,7 +35,8 @@
             </div>
 
         </div>
-
+          <div>
+          </div>
     </div>
 </template>
 
@@ -54,20 +55,21 @@ import axios from 'axios'
             weekDays: 'sun',
       rooms: [],
       selRoom: {
-        id: '1',
+        id: '2',
         name: ''
       },
         }
     },
             methods:{
-selRoomFun: function(index){
+selectRoom: function(index){
       var self = this
       self.selRoom = self.rooms[index]
     },
     getRooms: function(){
       var self = this
 
-axios.get(getUrl() + 'rooms/' + self.user + '/id_user/1')
+//           axios.get(getUrl() + 'rooms/' + self.user + '/id_user/' + self.id)
+axios.get(getUrl() + 'rooms/Boardroom 1/id_user/2')
           .then(function (response) {
           if (Array.isArray(response.data))
           {
@@ -169,18 +171,6 @@ axios.get(getUrl() + 'rooms/' + self.user + '/id_user/1')
                         var self = this
                         self.weekDays = 'mon'
                         self.rowsCalendar()
-//                    },
-//                    getRu: function(){
-//                    var self = this
-//                            self.nameMonth = 'ru'
-//                            self.weekDays = 'ru'
-//                            self.rowsCalendar()
-//                    },
-//                    getEn: function(){
-//                    var self = this
-//                            self.nameMonth = 'en'
-//                            self.weekDays = 'sun'
-//                            self.rowsCalendar()
                     }
             },
             computed: {
@@ -190,7 +180,6 @@ axios.get(getUrl() + 'rooms/' + self.user + '/id_user/1')
                 },
                         getMonth(){
                     var self = this
-    //                    return getNameMonth(self.nameMonth)
                      return getNameMonth()
                 },
                      currentDay(){
@@ -208,7 +197,7 @@ axios.get(getUrl() + 'rooms/' + self.user + '/id_user/1')
             },
             created(){
                 this.getMonthYear()
-    this.getRooms()
+                this.getRooms()
                 this.rowsCalendar()
         }
  }

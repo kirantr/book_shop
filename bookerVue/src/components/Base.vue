@@ -98,7 +98,7 @@
          }
 </script>
 
-<<style>
+<style>
 .calendar{
       background: #bce8f1;
 }

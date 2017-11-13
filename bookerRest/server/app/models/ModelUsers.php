@@ -8,7 +8,6 @@ class ModelUsers extends ModelDB
     {
         // var_dump($param);
          if ($param == 'admin' || $param == 'user')
-//        if ($param == '')
         {
             unset($param['id_user']);
             $sql = 'SELECT'
@@ -32,10 +31,6 @@ class ModelUsers extends ModelDB
                 }
                 $sql .= ' ORDER BY u.id';
             }
-            // else
-            // {
-            //     $sql .= ' ORDER BY u.id';
-            // }
             $data = $this->selectDB($sql);
             return $data;
         }
@@ -88,7 +83,6 @@ class ModelUsers extends ModelDB
                 $userName = $this->pdo->quote($param['username']);
                 $id_role = $this->pdo->quote($param['id_role']);
                 $login = $this->pdo->quote($param['login']);
-                $pass = md5(md5(trim($param['pass'])));
                 $pass = $this->pdo->quote($pass);
                 $email = $this->pdo->quote($param['email']);
                 $sql = 'INSERT INTO users (id_role, login, pass, username, email) VALUES ('.$id_role.', '.$login.', '.$pass.', '.$userName.', '.$email.')';

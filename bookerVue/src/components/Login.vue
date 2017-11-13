@@ -8,13 +8,13 @@
         <div>
           <h3>Login</h3>
           <div>
-              <input v-model="login" type="text">
+              <input v-model="login" type="text" value="admin">
           </div>
         </div>
         <div>
           <h3>Password</h3>
           <div>
-              <input v-model="pass" type="password">
+              <input v-model="pass" type="password" value="admin">
           </div>
         </div>
         <div>
